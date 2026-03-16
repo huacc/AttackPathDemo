@@ -1,0 +1,8 @@
+{
+  "name": "心理分析系统 - 原型阶段 P0",
+  "description": "基于 React 18, Ant Design 5 和 Google Gemini API 构建的心理分析系统原型。当前阶段：P0 项目初始化。",
+  "requestFramePermissions": [
+    "camera",
+    "microphone"
+  ]
+}
