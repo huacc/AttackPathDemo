@@ -236,12 +236,27 @@ const getOpenKeys = (pathname: string): string[] => {
 export const AppLayout: React.FC<AppLayoutProps> = ({ children }) => {
   const navigate = useNavigate();
   const location = useLocation();
+  const [collapsed, setCollapsed] = React.useState<boolean>(() => {
+    const cached = localStorage.getItem('app-layout-sider-collapsed');
+    return cached === '1';
+  });
   const [openKeys, setOpenKeys] = React.useState<string[]>(getOpenKeys(location.pathname));
 
   // 当路由变化时更新展开的菜单
   React.useEffect(() => {
-    setOpenKeys(getOpenKeys(location.pathname));
-  }, [location.pathname]);
+    if (!collapsed) {
+      setOpenKeys(getOpenKeys(location.pathname));
+    }
+  }, [location.pathname, collapsed]);
+
+  React.useEffect(() => {
+    localStorage.setItem('app-layout-sider-collapsed', collapsed ? '1' : '0');
+    if (collapsed) {
+      setOpenKeys([]);
+    } else {
+      setOpenKeys(getOpenKeys(location.pathname));
+    }
+  }, [collapsed, location.pathname]);
 
   const handleMenuClick = ({ key }: { key: string }) => {
     navigate(key);
@@ -257,6 +272,10 @@ export const AppLayout: React.FC<AppLayoutProps> = ({ children }) => {
     <Layout style={{ minHeight: '100vh' }}>
       <Sider
         width={240}
+        collapsible
+        collapsed={collapsed}
+        onCollapse={setCollapsed}
+        collapsedWidth={64}
         theme="light"
         style={{ borderRight: '1px solid #f0f0f0' }}
       >
@@ -265,7 +284,8 @@ export const AppLayout: React.FC<AppLayoutProps> = ({ children }) => {
             height: 64,
             display: 'flex',
             alignItems: 'center',
-            padding: '0 20px',
+            justifyContent: collapsed ? 'center' : 'flex-start',
+            padding: collapsed ? 0 : '0 20px',
             fontWeight: 700,
             fontSize: 16,
             color: APP_CONFIG.PRIMARY_COLOR,
@@ -274,13 +294,14 @@ export const AppLayout: React.FC<AppLayoutProps> = ({ children }) => {
           onClick={() => navigate('/dashboard')}
         >
           <ApiOutlined style={{ marginRight: 8 }} />
-          {APP_CONFIG.TITLE}
+          {!collapsed && APP_CONFIG.TITLE}
         </div>
         <Menu
           mode="inline"
+          inlineCollapsed={collapsed}
           selectedKeys={getSelectedKeys(location.pathname)}
-          openKeys={openKeys}
-          onOpenChange={handleOpenChange}
+          openKeys={collapsed ? [] : openKeys}
+          onOpenChange={collapsed ? undefined : handleOpenChange}
           items={getMenuItems()}
           onClick={handleMenuClick}
         />

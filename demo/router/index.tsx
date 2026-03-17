@@ -10,8 +10,8 @@ const OntologyDesigner = lazy(() => import('../modules/ontology/OntologyDesigner
 const EntityLibrary = lazy(() => import('../modules/ontology/EntityLibrary'));
 const RelationshipLibrary = lazy(() => import('../modules/ontology/RelationshipLibrary'));
 const KnowledgePage = lazy(() => import('../modules/knowledge/KnowledgePage'));
-const AttackPathSimulation = lazy(() => import('../modules/cockpit/AttackPathSimulation'));
-const DefenseStrategy = lazy(() => import('../modules/cockpit/DefenseStrategy'));
+const ATTACKMapping = lazy(() => import('../modules/knowledge/ATTACKMapping'));
+const D3FENDMapping = lazy(() => import('../modules/knowledge/D3FENDMapping'));
 const SceneList = lazy(() => import('../modules/scene/SceneList'));
 const SceneDetail = lazy(() => import('../modules/scene/SceneDetail'));
 const AssetInventory = lazy(() => import('../modules/asset/AssetInventory'));
@@ -125,7 +125,7 @@ export const AppRouter: React.FC = () => {
             path="/knowledge/attack"
             element={(
               <AppLayout>
-                <Placeholder title="ATT&CK 映射" description="ATT&CK矩阵、技术详情、映射关系" />
+                <ATTACKMapping />
               </AppLayout>
             )}
           />
@@ -133,7 +133,7 @@ export const AppRouter: React.FC = () => {
             path="/knowledge/defense"
             element={(
               <AppLayout>
-                <Placeholder title="D3FEND 映射" description="D3FEND分类、防御技术、覆盖度分析" />
+                <D3FENDMapping />
               </AppLayout>
             )}
           />
@@ -150,17 +150,13 @@ export const AppRouter: React.FC = () => {
           <Route
             path="/cockpit/attack-path"
             element={(
-              <AppLayout>
-                <AttackPathSimulation />
-              </AppLayout>
+              <Navigate to="/cockpit?mode=attack" replace />
             )}
           />
           <Route
             path="/cockpit/defense"
             element={(
-              <AppLayout>
-                <DefenseStrategy />
-              </AppLayout>
+              <Navigate to="/cockpit?mode=defense" replace />
             )}
           />
           <Route

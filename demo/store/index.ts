@@ -9,3 +9,4 @@ export { useCockpitStore } from './useCockpitStore';
 export { useSimulationStore } from './useSimulationStore';
 export { useAssetStore } from './useAssetStore';
 export { useGlobalStore } from './useGlobalStore';
+export { useCockpitOrchestratorStore } from './useCockpitOrchestratorStore';

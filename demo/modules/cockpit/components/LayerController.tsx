@@ -47,19 +47,19 @@ export const LayerController: React.FC<LayerControllerProps> = ({
             style={{ width: '100%' }}
           >
             <Space direction="vertical" style={{ width: '100%' }}>
-              <Radio value="business">
+              <Radio value="business" data-testid="cockpit-layer-business-radio">
                 <Space>
                   <AppstoreOutlined />
                   <span>业务层</span>
                 </Space>
               </Radio>
-              <Radio value="network">
+              <Radio value="network" data-testid="cockpit-layer-network-radio">
                 <Space>
                   <ShareAltOutlined />
                   <span>网络层</span>
                 </Space>
               </Radio>
-              <Radio value="attack">
+              <Radio value="attack" data-testid="cockpit-layer-attack-radio">
                 <Space>
                   <SafetyOutlined />
                   <span>攻防层</span>
@@ -76,6 +76,7 @@ export const LayerController: React.FC<LayerControllerProps> = ({
           </div>
           <Space direction="vertical" style={{ width: '100%' }}>
             <Checkbox
+              data-testid="cockpit-layer-business-checkbox"
               checked={layerConfig.business}
               onChange={(e) => onLayerToggle('business', e.target.checked)}
             >
@@ -85,6 +86,7 @@ export const LayerController: React.FC<LayerControllerProps> = ({
               </Space>
             </Checkbox>
             <Checkbox
+              data-testid="cockpit-layer-network-checkbox"
               checked={layerConfig.network}
               onChange={(e) => onLayerToggle('network', e.target.checked)}
             >
@@ -94,6 +96,7 @@ export const LayerController: React.FC<LayerControllerProps> = ({
               </Space>
             </Checkbox>
             <Checkbox
+              data-testid="cockpit-layer-attack-checkbox"
               checked={layerConfig.attack}
               onChange={(e) => onLayerToggle('attack', e.target.checked)}
             >
